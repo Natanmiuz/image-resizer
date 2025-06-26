@@ -22,26 +22,31 @@ class MainWindow:
         main_frame = tk.Frame(self.root, padx=20, pady=20)
         main_frame.pack(expand=True, fill=tk.BOTH)
 
+        # Permitir que las columnas se expandan
+        main_frame.grid_columnconfigure(1, weight=1)
+        main_frame.grid_columnconfigure(2, weight=0)
+
         tk.Label(main_frame, text="Imagen de origen:").grid(row=0, column=0, sticky="w")
-        tk.Entry(main_frame, textvariable=self.input_path, width=30).grid(row=0, column=1)
-        tk.Button(main_frame, text="Examinar", command=self.browse_input).grid(row=0, column=2)
+        tk.Entry(main_frame, textvariable=self.input_path, width=30).grid(row=0, column=1, sticky="ew")
+        tk.Button(main_frame, text="Examinar", command=self.browse_input).grid(row=0, column=2, sticky="ew")
 
         options_frame = tk.LabelFrame(main_frame, text="Opciones", padx=10, pady=10)
         options_frame.grid(row=1, column=0, columnspan=3, pady=10, sticky="we")
-        
-        tk.Checkbutton(options_frame, text="Ancho:", variable=self.width, onvalue=800, offvalue=0).grid(row=0, column=0)
-        tk.Entry(options_frame, textvariable=self.width, width=8).grid(row=0, column=1)
-        
-        tk.Checkbutton(options_frame, text="Alto:", variable=self.height, onvalue=600, offvalue=0).grid(row=1, column=0)
-        tk.Entry(options_frame, textvariable=self.height, width=8).grid(row=1, column=1)
-        
-        tk.Label(options_frame, text="Escala:").grid(row=2, column=0)
-        tk.Entry(options_frame, textvariable=self.scale, width=8).grid(row=2, column=1)
-        
-        tk.Label(options_frame, text="Calidad:").grid(row=3, column=0)
-        tk.Scale(options_frame, from_=1, to=100, variable=self.quality, orient=tk.HORIZONTAL).grid(row=3, column=1)
+        options_frame.grid_columnconfigure(1, weight=1)
 
-        tk.Button(main_frame, text="Redimensionar", command=self.resize).grid(row=2, column=1, pady=10)
+        tk.Checkbutton(options_frame, text="Ancho:", variable=self.width, onvalue=800, offvalue=0).grid(row=0, column=0, sticky="w")
+        tk.Entry(options_frame, textvariable=self.width, width=8).grid(row=0, column=1, sticky="ew")
+        
+        tk.Checkbutton(options_frame, text="Alto:", variable=self.height, onvalue=600, offvalue=0).grid(row=1, column=0, sticky="w")
+        tk.Entry(options_frame, textvariable=self.height, width=8).grid(row=1, column=1, sticky="ew")
+        
+        tk.Label(options_frame, text="Escala:").grid(row=2, column=0, sticky="w")
+        tk.Entry(options_frame, textvariable=self.scale, width=8).grid(row=2, column=1, sticky="ew")
+        
+        tk.Label(options_frame, text="Calidad:").grid(row=3, column=0, sticky="w")
+        tk.Scale(options_frame, from_=1, to=100, variable=self.quality, orient=tk.HORIZONTAL).grid(row=3, column=1, sticky="ew")
+
+        tk.Button(main_frame, text="Redimensionar", command=self.resize).grid(row=2, column=0, columnspan=3, pady=10, sticky="ew")
     
     def browse_input(self):
         filepath = filedialog.askopenfilename(
